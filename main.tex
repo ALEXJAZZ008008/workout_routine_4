@@ -1,0 +1,138 @@
+\RequirePackage{fix-cm}
+\documentclass[10pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[a4paper,left=0.75cm,right=0.75cm,top=0.75cm,bottom=0.75cm]{geometry}
+\IfFileExists{sourcesans.sty}{\usepackage[default]{sourcesans}}{\usepackage[default]{sourcesanspro}}
+\usepackage[table]{xcolor}
+\usepackage{array,booktabs}
+\usepackage[most]{tcolorbox}
+\usepackage[protrusion=false]{microtype}
+\usepackage{pgfmath}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+\pagestyle{empty}
+% Shift visible glyphs slightly down for a minimum physical top print clearance.
+\addtolength{\voffset}{2.2pt}
+\definecolor{ink}{RGB}{31,43,53}
+\definecolor{muted}{RGB}{75,85,94}
+\definecolor{headfill}{RGB}{221,232,240}
+\definecolor{grid}{RGB}{188,199,208}
+\definecolor{panelbg}{RGB}{247,249,250}
+\definecolor{stripe}{RGB}{244,248,251}
+\definecolor{targets}{RGB}{57,66,74}
+\color{ink}
+% Universal layout: all visible fonts >= 10 pt; 0.75 cm A4 margins.
+% Starting loads include provisional estimates for previously uncalibrated movements.
+\newcommand{\DeadliftAlex}{22.5}
+\newcommand{\DeadliftKathi}{15}
+\newcommand{\PressAlex}{15}
+\newcommand{\PressKathi}{7.5}
+\newcommand{\SquatAlex}{10}
+\newcommand{\SquatKathi}{5}
+\newcommand{\RowAlex}{12.5}
+\newcommand{\RowKathi}{7.5}
+\newcommand{\OverheadAlex}{7.5}
+\newcommand{\OverheadKathi}{5}
+\newcommand{\PulloverAlex}{12.5}
+\newcommand{\PulloverKathi}{5}
+\newcommand{\CurlAlex}{7.5}
+\newcommand{\HipBridgeKathi}{25}
+\newcommand{\CalfAlex}{20}
+\newcommand{\CalfKathi}{12.5}
+\newcommand{\SkullAlex}{5}
+\newcommand{\AbductionKathi}{2.5}
+\newcommand{\LateralAlex}{5}
+\newcommand{\LateralKathi}{2.5}
+\newcommand{\CrunchAlex}{7.5}
+\newcommand{\CrunchKathi}{5}
+\newcommand{\DumbbellStep}{2.5}
+\newcommand{\SplitAlex}{7.5}
+\newcommand{\SplitKathi}{5}
+\newcommand{\SqueezeAlex}{7.5}
+\newcommand{\SqueezeKathi}{5}
+\newcommand{\GoodMorningAlex}{12.5}
+\newcommand{\GoodMorningKathi}{7.5}
+\newcommand{\ThrusterAlex}{5}
+\newcommand{\ThrusterKathi}{2.5}
+\newcommand{\Pair}[1]{2\,\texttimes\,#1\,kg}
+\newcommand{\Single}[1]{#1\,kg}
+% Round each warm-up UP to an available increment, but below work weight.
+\newcommand{\WarmN}[3]{\pgfmathsetmacro{\wnum}{max(0,min((#2)-(#3),ceil((#1)*(#2)/(#3)-0.005)*(#3)))}\pgfmathprintnumber[fixed,precision=1]{\wnum}}
+\newcommand{\WarmFull}[2]{6\,\texttimes\,\WarmN{0.4}{#1}{#2}\quad 4\,\texttimes\,\WarmN{0.6}{#1}{#2}\quad 2\,\texttimes\,\WarmN{0.8}{#1}{#2}\,kg}
+% One target per person applies to every working set.
+\newcommand{\RepsFive}{5\,\,6\,\,7\,\,8}
+\newcommand{\RepsEight}{8\,\,9\,\,10\,\,11\,\,12}
+\newcommand{\RepsTwenty}{10\,11\,12\,13\,14\,15\,16\,17\,18\,19\,20}
+\newcolumntype{E}{>{\raggedright\arraybackslash}p{75.0mm}}
+\newcolumntype{H}{>{\centering\arraybackslash}p{11.5mm}}
+\newcolumntype{S}{>{\centering\arraybackslash}p{7.0mm}}
+\newcolumntype{A}{>{\raggedright\arraybackslash}p{48mm}}
+\newcolumntype{K}{>{\raggedright\arraybackslash}p{48mm}}
+% Subtle banding groups each exercise without extra ruled lines.
+\newcommand{\WRow}[3]{ & \textbf{#1} & \textbf{W} & \textcolor{muted}{#2} & \textcolor{muted}{#3}\\[-0.8mm] }
+% One slot: exercise, session pair, Alex load, Kathi load, Alex targets,
+% Kathi targets, optional warm-up, background.
+\newcommand{\Exercise}[8]{%
+ \rowcolor{#8}#1 & \textbf{#2} & & \textbf{#3} & \textbf{#4}\\[0mm]
+ \ifx\relax#7\relax\else\rowcolor{#8}#7\fi
+ \rowcolor{#8} & & \textbf{1--2} & \textcolor{targets}{#5} & \textcolor{targets}{#6}\\[0.12mm]
+ \hline
+}
+% A paired slot is presented as an Alex row followed by a Kathi row,
+% placing each individual load alongside the correct exercise name.
+\newcommand{\PairedExercise}[8]{%
+ \rowcolor{#8}#1 & \textbf{#3} & & \textbf{#4} & \\[0mm]
+ \rowcolor{#8}#2 & & & & \textbf{#5}\\[0mm]
+ \rowcolor{#8} & & \textbf{1--2} & \textcolor{targets}{#6} & \textcolor{targets}{#7}\\[0.12mm]
+ \hline
+}
+\begin{document}
+\fontsize{10.3pt}{12pt}\selectfont
+\begin{minipage}[c]{0.76\linewidth}
+{\fontsize{21}{25}\selectfont\bfseries Full-body workout}\par
+{}
+\end{minipage}\hfill
+\begin{minipage}[c]{0.23\linewidth}\raggedleft\bfseries 3\texttimes\ per week\end{minipage}
+\arrayrulecolor{grid}
+\setlength{\arrayrulewidth}{0.37pt}
+\setlength{\tabcolsep}{0pt}
+\renewcommand{\arraystretch}{1.166}
+\noindent\begin{tabular}{@{}E@{\hspace{0.9mm}}H@{\hspace{0.9mm}}S@{\hspace{1.35mm}}A@{\hspace{0.8mm}\color{grid}\vrule width 0.45pt\hspace{0.8mm}}K@{}}
+\rowcolor{headfill}\rule{0pt}{5mm}\textbf{Exercise} & \textbf{A/B/C} & \textbf{Sets} & \textbf{Alex: load / reps} & \textbf{Kathi: load / reps}\\\hline
+\Exercise{\textbf{1.} Neutral-grip DB sumo deadlift}{A, C}{\Pair{\DeadliftAlex}}{\Pair{\DeadliftKathi}}{\RepsFive}{\RepsFive}{\WRow{A, C}{\WarmFull{\DeadliftAlex}{\DumbbellStep}}{\WarmFull{\DeadliftKathi}{\DumbbellStep}}}{white}
+\Exercise{\textbf{2.} Pronated wide-elbow DB floor press--fly}{A, B}{\Pair{\PressAlex}}{\Pair{\PressKathi}}{\RepsEight}{\RepsEight}{\WRow{A, B}{\WarmFull{\PressAlex}{\DumbbellStep}}{\WarmFull{\PressKathi}{\DumbbellStep}}}{stripe}
+\Exercise{\textbf{3.} Neutral-grip DB squat (DB at sides)}{A, B}{\Pair{\SquatAlex}}{\Pair{\SquatKathi}}{\RepsEight}{\RepsEight}{\WRow{A, B}{\WarmFull{\SquatAlex}{\DumbbellStep}}{\WarmFull{\SquatKathi}{\DumbbellStep}}}{white}
+\Exercise{\textbf{4.} Neutral sumo DB dead-stop row}{A, B}{\Pair{\RowAlex}}{\Pair{\RowKathi}}{\RepsEight}{\RepsEight}{\WRow{A, B}{\WarmFull{\RowAlex}{\DumbbellStep}}{\WarmFull{\RowKathi}{\DumbbellStep}}}{stripe}
+\Exercise{\textbf{5.} Straight-leg DB good morning (DB at sides)}{A, B}{\Pair{\GoodMorningAlex}}{\Pair{\GoodMorningKathi}}{\RepsEight}{\RepsEight}{\WRow{B}{\WarmFull{\GoodMorningAlex}{\DumbbellStep}}{\WarmFull{\GoodMorningKathi}{\DumbbellStep}}}{white}
+\Exercise{\textbf{6.} Semi-pronated DB overhead press}{A, C}{\Pair{\OverheadAlex}}{\Pair{\OverheadKathi}}{\RepsEight}{\RepsEight}{\WRow{A, C}{\WarmFull{\OverheadAlex}{\DumbbellStep}}{\WarmFull{\OverheadKathi}{\DumbbellStep}}}{stripe}
+\Exercise{\textbf{7.} DB split squat}{B, C}{\Pair{\SplitAlex}}{\Pair{\SplitKathi}}{\RepsEight}{\RepsEight}{\WRow{C}{\WarmFull{\SplitAlex}{\DumbbellStep}}{\WarmFull{\SplitKathi}{\DumbbellStep}}}{white}
+\Exercise{\textbf{8.} DB squeeze floor press}{B, C}{\Pair{\SqueezeAlex}}{\Pair{\SqueezeKathi}}{\RepsTwenty}{\RepsTwenty}{\WRow{C}{\WarmFull{\SqueezeAlex}{\DumbbellStep}}{\WarmFull{\SqueezeKathi}{\DumbbellStep}}}{stripe}
+\Exercise{\textbf{9.} Standing DB calf raise}{A, B}{\Single{\CalfAlex}}{\Single{\CalfKathi}}{\RepsTwenty}{\RepsTwenty}{}{white}
+\Exercise{\textbf{10.} Straight-arm DB pullover}{B, C}{\Single{\PulloverAlex}}{\Single{\PulloverKathi}}{\RepsEight}{\RepsEight}{}{stripe}
+\PairedExercise{\textbf{11A.} Supinating DB curl}{\textbf{11B.} DB glute bridge}{A, B}{\Pair{\CurlAlex}}{\Single{\HipBridgeKathi}}{\RepsEight}{\RepsEight}{white}
+\Exercise{\textbf{12.} Scapular-plane DB lateral raise}{B, C}{\Pair{\LateralAlex}}{\Pair{\LateralKathi}}{\RepsTwenty}{\RepsTwenty}{}{stripe}
+\PairedExercise{\textbf{13A.} Lying two-DB skull crusher (DB beside head)}{\textbf{13B.} Side-lying DB hip abduction}{A, C}{\Pair{\SkullAlex}}{\Single{\AbductionKathi}}{\RepsEight}{\RepsTwenty}{white}
+\Exercise{\textbf{14.} DB crunch}{A, C}{\Single{\CrunchAlex}}{\Single{\CrunchKathi}}{\RepsEight}{\RepsEight}{}{stripe}
+\rowcolor{headfill}\multicolumn{5}{@{}l}{\rule{0pt}{4.5mm}\textbf{FINISHER}}\\\hline
+\rowcolor{stripe}\textbf{F.} Alternating single-arm DB thruster (total reps) & \textbf{A, B, C} & & \Single{\ThrusterAlex} & \Single{\ThrusterKathi}\\[-0.4mm]
+\rowcolor{stripe} & & \textbf{1--3} & \textcolor{targets}{16 18 20 22 24 26 28 30} & \textcolor{targets}{16 18 20 22 24 26 28 30}\\\hline
+\end{tabular}
+\vspace{1.7mm}
+\begin{tcolorbox}[colback=panelbg,colframe=grid,boxrule=0.5pt,arc=1.5mm,left=2mm,right=2mm,top=1.7mm,bottom=1.7mm,boxsep=0pt,before skip=0pt,after skip=0pt]
+\textbf{WORKOUT INSTRUCTIONS \& PROGRESSION}\par\vspace{1.0mm}
+\begin{minipage}[t]{0.485\linewidth}\raggedright
+\textbf{Warm-up:} W = 6 reps at 40\%, 4 at 60\%, 2 at 80\% of working load (rounded to available weights). Complete all 3 sets. Only in the session(s) marked beside W.\par\vspace{0.8mm}
+\textbf{Partners:} In slots 11 and 13, Alex and Kathi train simultaneously.\par\vspace{0.8mm}
+\textbf{Loads:} DB loads kg/hand unless single.\par\vspace{0.8mm}
+\textbf{Schedule:} A/B/C in order, 2 sets per assigned exercise; 3 finisher sets per session. Perform movements in numerical order.\par\vspace{0.8mm}
+\textbf{Reps:} Each printed target applies to every working set. Advance to the next printed target after all sets reach the current target; otherwise repeat. For unilateral work, complete both sides per set.
+\end{minipage}\hfill
+\begin{minipage}[t]{0.485\linewidth}\raggedright
+\textbf{Weight:} Increase after all sets reach the maximum; restart at the minimum. If the new weight is too heavy, keep trying until you reach the target repetitions.\par\vspace{0.8mm}
+\textbf{Effort:} 1 RIR. Finisher: consistent technique, not to failure.\par\vspace{0.8mm}
+\textbf{Rest:} Alternate sets with your partner; allow extra recovery as needed.\par\vspace{0.8mm}
+\textbf{Plateaus:} Technique, control and ROM gains count. If half or more movements stall or regress for 3 consecutive sessions, skip the next session, then resume.
+\end{minipage}
+\end{tcolorbox}
+\end{document}
